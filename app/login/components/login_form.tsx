@@ -1,5 +1,6 @@
 'use client';
 import Link from "next/link";
+import Image from "next/image";
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -35,7 +36,7 @@ export default function LoginForm() {
     return (
         <form onSubmit={handleLogin}>
 
-            <div className="flex flex-col w-screen h-screen justify-center items-center">
+            <div className="flex flex-col h-screen justify-center items-center">
                 <div className="flex flex-col max-w-md w-10/12">
 
                     <label htmlFor="name" className="text-white font-bold">

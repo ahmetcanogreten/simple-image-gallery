@@ -47,7 +47,7 @@ export default function RegisterForm() {
 
     return (
         <form onSubmit={handleRegister}>
-            <div className="flex flex-col w-screen h-screen justify-center items-center">
+            <div className="flex flex-col h-screen justify-center items-center">
                 <div className="flex flex-col max-w-md w-10/12">
 
                     <label htmlFor="name" className="text-white font-bold">
