@@ -4,6 +4,9 @@ import Link from "next/link";
 import { auth } from "@/app/firebase_config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { db } from "@/app/firebase_config";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -23,9 +26,15 @@ export default function RegisterForm() {
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        let user = await createUserWithEmailAndPassword(auth, email, password);
+        let userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-        if (user) {
+        if (userCredential) {
+
+            await setDoc(doc(db, 'users', userCredential.user.uid), {
+                name: name,
+                likedPosts: [],
+            })
+
             router.push("/");
         }
 
