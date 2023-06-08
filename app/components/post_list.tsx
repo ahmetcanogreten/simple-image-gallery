@@ -19,6 +19,7 @@ export default function PostList({
                         key={post.id}
                         post={post}
                         isLiked={user.likedPosts.includes(post.id)}
+                        user={user}
                     />;
                 })
 

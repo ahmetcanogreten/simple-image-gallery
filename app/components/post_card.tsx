@@ -1,12 +1,14 @@
 import { collection, DocumentData, updateDoc, doc, arrayUnion, arrayRemove, where, query, getDocs } from "firebase/firestore";
 import { auth, db } from "@/app/firebase_config";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 
-export default function PostCard({ post, isLiked }: { post: DocumentData, isLiked: boolean }) {
+export default function PostCard({ post, isLiked, user }: { user: DocumentData, post: DocumentData, isLiked: boolean }) {
 
     const [likeCount, setLikeCount] = useState(0);
+
+    const [comment, setComment] = useState("");
 
     useEffect(() => {
         getLikeCount();
@@ -31,6 +33,22 @@ export default function PostCard({ post, isLiked }: { post: DocumentData, isLike
         await updateDoc(doc(db, 'users', auth.currentUser!.uid), {
             likedPosts: arrayRemove(post.id)
         });
+    }
+
+    const commentPost = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        await updateDoc(doc(db, 'posts', post.id), {
+            comments: arrayUnion({
+                userName: user.name,
+                comment: comment
+            })
+        });
+        setComment("");
+    }
+
+    const onCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setComment(e.target.value);
     }
 
     return (
@@ -63,6 +81,25 @@ export default function PostCard({ post, isLiked }: { post: DocumentData, isLike
                     {likeCount} Beğeni
                 </p>
             </div>
+            {post.comments.map((comment: DocumentData) => {
+                return (
+                    <div className="flex flex-col my-4 border-2 p-4">
+                        <p className="font-bold">
+                            {comment.userName}
+                        </p>
+                        <p>
+                            {comment.comment}
+                        </p>
+                    </div>
+                );
+            })}
+            <form onSubmit={commentPost}>
+                <div className="bg-gray-50 border-2 border-purple-600 rounded-md p-8 flex flex-col">
+                    <textarea className="my-4 p-4 border-2 focus:border-purple-600 outline-none" placeholder="Bir şeyler yaz..." onChange={onCommentChange} value={comment} />
+                    <button type="submit" className="bg-purple-600 p-4 hover:bg-purple-500 text-white font-bold ">Yorum yap</button>
+                </div>
+            </form >
+
         </div>
     );
 

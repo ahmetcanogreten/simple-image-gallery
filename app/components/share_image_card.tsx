@@ -39,6 +39,7 @@ export default function ShareImageCard({
                 imageUrl: downloadUrl,
                 createdAt: new Date(),
                 userId: auth.currentUser?.uid,
+                comments: []
             });
 
             setCaption("");
