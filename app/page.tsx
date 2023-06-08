@@ -11,6 +11,8 @@ import { auth } from "@/app/firebase_config";
 import { collection, DocumentData, getDoc, onSnapshot, doc, orderBy, query } from "firebase/firestore";
 import { db } from "@/app/firebase_config";
 
+import { Avatar } from "antd";
+
 
 export default function Home() {
 
@@ -18,6 +20,8 @@ export default function Home() {
   const [user, setUser] = useState<DocumentData>();
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [activeTab, setActiveTab] = useState<string>("all");
+
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -80,24 +84,42 @@ export default function Home() {
 
 
 
+
   return (
     <main className="flex justify-center relative">
       {
         isLoading ? null :
-          <div className="absolute right-8 top-8">
+          <div className="absolute right-16 top-8">
 
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            <div className="flex flex-col items-center" onMouseLeave={() => setIsProfileModalOpen(false)}>
+              <div onMouseEnter={() => setIsProfileModalOpen(true)}>
+                <Avatar className="bg-purple-700 w-16 h-16 flex flex-col justify-center">
+                  <p className="font-bold text-2xl">
+                    {user?.name[0]}
+                  </p>
+                </Avatar>
+              </div>
 
-              onClick={
-                async (e) => {
-                  e.preventDefault();
-                  await auth.signOut();
+              <div className={`my-4 rounded-lg bg-purple-500 p-4 ${isProfileModalOpen ? "" : "opacity-0"} w-48`}>
+                <p className="text-white font-bold my-4">
+                  {user?.name}
+                </p>
+                <button
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
 
-                }
-              }>
-              Çıkış Yap
-            </button>
+                  onClick={
+                    async (e) => {
+                      e.preventDefault();
+                      await auth.signOut();
+
+                    }
+                  }>
+                  Çıkış Yap
+                </button>
+              </div>
+
+            </div>
+
           </div>}
       <div className="w-screen max-w-4xl m-12"
       >
