@@ -69,20 +69,23 @@ export default function Home() {
 
   return (
     <main className="flex justify-center relative">
-      <div className="absolute right-8 top-8">
-        <button
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      {
+        isLoading ? null :
+          <div className="absolute right-8 top-8">
 
-          onClick={
-            async (e) => {
-              e.preventDefault();
-              await auth.signOut();
+            <button
+              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
 
-            }
-          }>
-          Çıkış Yap
-        </button>
-      </div>
+              onClick={
+                async (e) => {
+                  e.preventDefault();
+                  await auth.signOut();
+
+                }
+              }>
+              Çıkış Yap
+            </button>
+          </div>}
       <div className="w-screen max-w-4xl m-12"
       >
         {
