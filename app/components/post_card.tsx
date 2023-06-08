@@ -83,7 +83,9 @@ export default function PostCard({ post, isLiked, user }: { user: DocumentData, 
             </div>
             {post.comments.map((comment: DocumentData) => {
                 return (
-                    <div className="flex flex-col my-4 border-2 p-4">
+                    <div
+                        key={comment.comment}
+                        className="flex flex-col my-4 border-2 p-4">
                         <p className="font-bold">
                             {comment.userName}
                         </p>
