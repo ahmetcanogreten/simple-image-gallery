@@ -17,6 +17,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<DocumentData>();
   const [posts, setPosts] = useState<DocumentData[]>([]);
+  const [activeTab, setActiveTab] = useState<string>("all");
 
   const router = useRouter();
 
@@ -65,6 +66,18 @@ export default function Home() {
     });
   }
 
+  const toAllPosts = () => {
+    setActiveTab("all");
+  }
+
+  const toMyPosts = () => {
+    setActiveTab("mine");
+  }
+
+  const toLikedPosts = () => {
+    setActiveTab("liked");
+  }
+
 
 
   return (
@@ -95,10 +108,51 @@ export default function Home() {
               user={user!}
             />
             <div className="h-10"></div>
-            <PostList
-              posts={posts}
-              user={user!}
-            />
+            <div className="flex justify-between">
+              <button
+                onClick={toAllPosts}
+                className={
+                  `${activeTab == "all" ? "bg-purple-700" : "bg-purple-400"}
+                  hover:bg-purple-500 text-white p-4 rounded-md w-1/4`
+                }
+              >
+                Hepsi
+              </button>
+              <button
+                onClick={toMyPosts}
+                className={
+                  `${activeTab == "mine" ? "bg-purple-700" : "bg-purple-400"}
+                hover:bg-purple-500 text-white p-4 rounded-md w-1/4`
+                }
+              >
+                Benim Paylaştıklarım
+              </button>
+              <button
+                onClick={toLikedPosts}
+                className={
+                  `${activeTab == "liked" ? "bg-purple-700" : "bg-purple-400"}
+                hover:bg-purple-500 text-white p-4 rounded-md w-1/4`
+                }
+              >
+                Beğendiklerim
+              </button>
+            </div>
+            {
+              activeTab == "all" ?
+                <PostList
+                  posts={posts}
+                  user={user!}
+                /> : (
+                  activeTab == "mine" ?
+                    <PostList
+                      posts={posts.filter((post) => post.userId == auth.currentUser!.uid)}
+                      user={user!}
+                    /> : <PostList
+                      posts={posts.filter((post) => user!.likedPosts.includes(post.id))}
+                      user={user!}
+                    />)
+            }
+
           </>
         }
 
