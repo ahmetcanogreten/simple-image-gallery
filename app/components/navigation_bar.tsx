@@ -43,6 +43,7 @@ export default function NavigationBar({
                             <div className="h-px bg-purple-600"></div>
                             <Link href={"/mine"} className="p-4 my-2 w-full text-start rounded-lg text-white hover:bg-white hover:text-purple-600 block">Paylaştıklarım</Link>
                             <Link href={"/liked"} className="p-4 my-2 w-full text-start rounded-lg text-white hover:bg-white hover:text-purple-600 block">Beğendiklerim</Link>
+                            <Link href={"/change-password"} className="p-4 my-2 w-full text-start rounded-lg text-white hover:bg-white hover:text-purple-600 block">Şifre Değiştir</Link>
 
                             <button
                                 className="p-4 my-2 w-full text-start rounded-lg text-white  bg-red-600 hover:bg-red-700 font-bold"
