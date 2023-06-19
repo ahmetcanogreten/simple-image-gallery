@@ -3,9 +3,10 @@ import Image from "next/image"
 
 export default function LoginPage() {
     return (
-        <div className="flex">
-            <div className="flex  justify-items-center p-64 w-1/2">
+        <div className="flex justify-between">
+            <div className="flex justify-center w-1/2 ">
                 <img
+                    className="max-w-4xl p-4"
                     src="/login/login.svg"
                     alt="Login"
                 />
