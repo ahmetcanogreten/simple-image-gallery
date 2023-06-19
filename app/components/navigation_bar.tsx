@@ -15,7 +15,7 @@ export default function NavigationBar({
 
     return (
         <nav >
-            <div className="h-16 w-full flex items-center justify-between px-4 text-purple-600">
+            <div className="h-16 w-full flex items-center justify-between px-4 text-purple-600 cursor-pointer">
 
                 <Link
                     className="text-2xl font-bold cursor-pointer flex items-center"
@@ -36,7 +36,7 @@ export default function NavigationBar({
 
                     <div className="flex flex-col items-stretch absolute right-0"
                     >
-                        <div className={`my-4 rounded-lg bg-purple-500 p-4 ${isProfileModalOpen ? "" : "opacity-0"} w-48`}>
+                        <div className={`my-4 rounded-lg bg-purple-500 p-4 ${isProfileModalOpen ? "" : "hidden"} w-48`}>
                             <p className="text-white font-bold my-4 text-center">
                                 {user?.name}
                             </p>

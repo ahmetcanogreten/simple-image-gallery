@@ -70,7 +70,8 @@ export default function LikedPage() {
                         <NavigationBar user={user} />
                         <div className="my-8 flex flex-col items-center">
                             <div className="max-w-2xl w-full">
-
+                                <h1 className="font-bold text-xl">Beğendiklerim</h1>
+                                {posts.filter((post) => user!.likedPosts.includes(post.id)).length === 0 && <p>Henüz beğendiğiniz bir paylaşım yok.</p>}
                                 <PostList
                                     posts={posts.filter((post) => user!.likedPosts.includes(post.id))}
                                     user={user!}

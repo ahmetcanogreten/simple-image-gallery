@@ -73,12 +73,15 @@ export default function MinePage() {
                         <div className="my-8 flex flex-col items-center">
                             <div className="max-w-2xl w-full">
 
+                                <h1 className="font-bold text-xl">Paylaştıklarım</h1>
+                                {
+                                    posts.filter((post) => post.userId == auth.currentUser!.uid).length == 0 ? <p>Henüz hiçbir şey paylaşmadınız.</p> : null
+                                }
                                 <PostList
                                     posts={posts.filter((post) => post.userId == auth.currentUser!.uid)}
                                     user={user!}
+                                    canBeDeleted={true}
                                 />
-
-
                             </div>
                         </div>
                     </>

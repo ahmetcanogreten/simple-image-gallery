@@ -1,17 +1,19 @@
-import { collection, DocumentData, updateDoc, doc, arrayUnion, arrayRemove, where, query, getDocs } from "firebase/firestore";
+import { collection, DocumentData, updateDoc, doc, arrayUnion, arrayRemove, where, query, getDocs, deleteDoc } from "firebase/firestore";
 import { auth, db } from "@/app/firebase_config";
 import React, { useEffect, useState } from "react";
 import { LikeOutlined, LikeFilled } from "@ant-design/icons";
 
 
 
-export default function PostCard({ post, isLiked, user }: { user: DocumentData, post: DocumentData, isLiked: boolean }) {
+
+export default function PostCard({ post, isLiked, user, canBeDeleted = false }: { user: DocumentData, post: DocumentData, isLiked: boolean, canBeDeleted?: boolean }) {
 
     const [isCommentsOpen, setIsCommentsOpen] = useState<boolean>(false);
     const [likeCount, setLikeCount] = useState(0);
     const [comment, setComment] = useState("");
-
     const [isOnLikeHover, setIsOnLikeHover] = useState<boolean>(false);
+
+    const [isOnHover, setIsOnHover] = useState<boolean>(false);
 
     useEffect(() => {
         getLikeCount();
@@ -54,8 +56,27 @@ export default function PostCard({ post, isLiked, user }: { user: DocumentData, 
         setComment(e.target.value);
     }
 
+    const onDeletePost = async () => {
+        await deleteDoc(doc(db, 'posts', post.id));
+    }
+
+
     return (
-        <div className="flex flex-col border-2 border-purple-100 rounded-md p-8 my-8 hover:border-purple-600">
+        <div
+            onMouseEnter={() => {
+                setIsOnHover(true)
+            }}
+            onMouseLeave={() => {
+                setIsOnHover(false)
+            }}
+            className="flex flex-col border-2 border-purple-100 rounded-md p-8 my-8 hover:border-purple-600 relative">
+            {
+                (canBeDeleted && isOnHover) ? <button
+                    onClick={onDeletePost}
+                    className="absolute right-2 top-2 text-2xl w-14 h-14 p-2 bg-purple-100 hover:bg-purple-200 rounded-full flex flex-col justify-evenly items-center text-red-700 font-bold">
+                    X
+                </button > : null
+            }
             <img
                 alt=""
                 src={post.imageUrl}
@@ -136,7 +157,7 @@ export default function PostCard({ post, isLiked, user }: { user: DocumentData, 
                     </>
                     : null
             }
-        </div>
+        </div >
     );
 
 }
