@@ -13,17 +13,32 @@ export default function LoginForm() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isError, setIsError] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const router = useRouter();
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsError(false);
 
-        let user = await signInWithEmailAndPassword(auth, email, password);
+        try {
 
-        if (user) {
-            router.push("/");
+            let user = await signInWithEmailAndPassword(auth, email, password);
+
+
+            if (user) {
+                setIsSuccess(true);
+                setTimeout(() => {
+                    router.push("/");
+                }, 2000);
+            } else {
+                setIsError(true);
+            }
+        } catch (error) {
+            setIsError(true);
         }
+
     }
 
     const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,6 +70,8 @@ export default function LoginForm() {
                         required
                         className="my-4 p-4 border-2 focus:border-purple-600 outline-none"
                         onChange={onPasswordChange} />
+                    {isError && <p className="text-red-500">E-Posta veya şifre hatalı</p>}
+                    {isSuccess && <p className="text-green-500">Giriş başarılı</p>}
                     <button type="submit" className="text-white my-8 p-4 bg-purple-600 hover:bg-purple-500">Giriş</button>
                     <div className="flex justify-center">
                         <Link href="/register" className="text-purple-600 hover:text-purple-500 text-center p-4">Kaydol</Link>
