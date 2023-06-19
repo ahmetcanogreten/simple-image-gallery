@@ -1,5 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +16,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} flex flex-col`}>
+        {children}
+        <div className="flex flex-col items-center bg-gray-200 p-8">
+          <div className="flex flex-grow w-full justify-evenly">
+            <Link href="">Hakkında</Link>
+            <Link href="">Yardım</Link>
+            <Link href="">Basın</Link>
+            <Link href="">API</Link>
+            <Link href="">İş Fırsatları</Link>
+            <Link href="">Gizlilik</Link>
+            <Link href="">Koşullar</Link>
+            <Link href="">Konumlar</Link>
+            <Link href="">Dil</Link>
+            <Link href="">İletişim</Link>
+          </div>
+          <div className="p-4"></div>
+          @2023 Gallery by Ahmet Karakaya
+        </div>
+      </body>
     </html>
   )
 }
