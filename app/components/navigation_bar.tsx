@@ -3,6 +3,7 @@ import { DocumentData } from "firebase/firestore";
 import { useState } from "react";
 import Link from "next/link";
 import { auth } from "../firebase_config";
+import { CameraFilled } from "@ant-design/icons";
 
 export default function NavigationBar({
     user
@@ -17,9 +18,13 @@ export default function NavigationBar({
             <div className="h-16 w-full flex items-center justify-between px-4 text-purple-600">
 
                 <Link
-                    className="text-2xl font-bold cursor-pointer"
+                    className="text-2xl font-bold cursor-pointer flex items-center"
                     href={"/"}
-                >Photo Gallery</Link>
+                >
+                    <CameraFilled />
+                    <p className="inline mx-2">Gallery</p>
+
+                </Link>
                 <div className="relative" onMouseLeave={() => setIsProfileModalOpen(false)}>
                     <div className="flex items-center" onMouseEnter={() => setIsProfileModalOpen(true)}>
                         <Avatar className="bg-purple-700 w-12 h-12 flex flex-col justify-center">
